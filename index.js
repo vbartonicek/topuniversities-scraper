@@ -18,10 +18,11 @@ Apify.main(async () => {
         },
 
         // Stop crawling after several pages
-        maxRequestsPerCrawl: 3,
+        maxRequestsPerCrawl: 1,
 
 
         gotoFunction: ({request, page}) => {
+            // Wait until the page is fully loaded - universities table is loaded asynchronously
             return page.goto(request.url, { waitUntil: 'networkidle2' })
         },
 
@@ -51,19 +52,26 @@ Apify.main(async () => {
 
                 return data;
             };
+
+            // Set "Results per page" select field to show all universities
+            await page.select('#qs-rankings_length select', '-1');
+
+            // Select table rows with universities data and call the pageFunction
             const data = await page.$$eval('#qs-rankings > tbody > tr', pageFunction);
 
             // Store the results to the default dataset.
             await Apify.pushData(data);
 
             // Find a link to the next page and enqueue it if it exists.
+            /*
             const infos = await Apify.utils.enqueueLinks({
                 page,
                 requestQueue,
                 selector: '.paginate_button.next',
             });
+            */
 
-            if (infos.length === 0) console.log(`${request.url} is the last page!`);
+            // if (infos.length === 0) console.log(`${request.url} is the last page!`);
         },
 
         // This function is called if the page processing failed more than maxRequestRetries+1 times.
