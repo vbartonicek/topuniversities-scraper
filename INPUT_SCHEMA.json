@@ -7,11 +7,12 @@
     "year": {
       "title": "Year",
       "type": "integer",
-      "description": "A year from 2017 until today",
+      "description": "A year of the QS rankings",
       "default": 2020,
       "prefill": 2020,
       "example": 2020,
-      "editor": "requestListSources",
+      "editor": "select",
+      "enum": [2017, 2018, 2019, 2020]
     }
   },
   "required": ["year"]
