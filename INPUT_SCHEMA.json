@@ -1,0 +1,18 @@
+{
+  "title": "Scraper input",
+  "description": "No description",
+  "type": "object",
+  "schemaVersion": 1,
+  "properties": {
+    "year": {
+      "title": "Year",
+      "type": "integer",
+      "description": "A year from 2017 until today",
+      "default": 2020,
+      "prefill": 2020,
+      "example": 2020,
+      "editor": "requestListSources",
+    }
+  },
+  "required": ["year"]
+}

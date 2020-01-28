@@ -1,10 +1,12 @@
 const Apify = require('apify');
 
 Apify.main(async () => {
+    const { year } = await Apify.getInput();
+
     // Apify.openRequestQueue() is a factory to get a preconfigured RequestQueue instance.
     // We add our first request to it - the initial page the crawler will visit.
     const requestQueue = await Apify.openRequestQueue();
-    await requestQueue.addRequest({ url: 'https://www.topuniversities.com/university-rankings/world-university-rankings/2020' });
+    await requestQueue.addRequest({ url: `https://www.topuniversities.com/university-rankings/world-university-rankings/${year}` });
 
     // Create an instance of the PuppeteerCrawler class - a crawler
     // that automatically loads the URLs in headless Chrome / Puppeteer.
