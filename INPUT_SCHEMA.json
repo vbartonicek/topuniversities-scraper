@@ -6,7 +6,7 @@
   "properties": {
     "year": {
       "title": "Year",
-      "type": "integer",
+      "type": "string",
       "description": "A year of the QS rankings",
       "default": 2020,
       "prefill": 2020,
