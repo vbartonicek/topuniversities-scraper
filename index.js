@@ -1,7 +1,7 @@
 const Apify = require('apify');
 
 Apify.main(async () => {
-    const { year } = await Apify.getInput();
+    const { year, country } = await Apify.getInput();
 
     // Apify.openRequestQueue() is a factory to get a preconfigured RequestQueue instance.
     // We add our first request to it - the initial page the crawler will visit.
@@ -17,6 +17,7 @@ Apify.main(async () => {
         launchPuppeteerOptions: {
             // For example, by adding "slowMo" you'll slow down Puppeteer operations to simplify debugging
            // slowMo: 500,
+            headless: true,
         },
 
         // Stop crawling after several pages
@@ -57,6 +58,9 @@ Apify.main(async () => {
 
             // Set "Results per page" select field to show all universities
             await page.select('#qs-rankings_length select', '-1');
+
+            // Set country filter
+            if (country !== "All countries") await page.select('#qs-rankings thead select.country-select', country);
 
             // Select table rows with universities data and call the pageFunction
             const data = await page.$$eval('#qs-rankings > tbody > tr', pageFunction);
