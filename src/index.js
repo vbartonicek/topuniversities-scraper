@@ -28,7 +28,7 @@ Apify.main(async () => {
 
         // Concurrency
         minConcurrency: 1,
-        maxConcurrency: 4,
+        maxConcurrency: 1,
 
         // Stop crawling after several pages
         maxRequestsPerCrawl: 1200, // There should not be more request as the ranking each year contains about 1000 universities
