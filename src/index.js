@@ -3,7 +3,7 @@ const { pageFunction, detailPageFunction } = require('./scrapers');
 const { PAGE_TYPES } = require('./consts');
 
 Apify.main(async () => {
-    const { detailedMode, year, country } = await Apify.getInput();
+    const { detailedMode, year, country, proxy } = await Apify.getInput();
 
     // Apify.openRequestQueue() is a factory to get a preconfigured RequestQueue instance.
     // We add our first request to it - the initial page the crawler will visit.
@@ -13,6 +13,8 @@ Apify.main(async () => {
         userData: { type: PAGE_TYPES.INDEX },
     });
 
+    if (proxy.apifyProxyGroups && proxy.apifyProxyGroups.length === 0) delete proxy.apifyProxyGroups;
+
     // Create an instance of the PuppeteerCrawler class - a crawler
     // that automatically loads the URLs in headless Chrome / Puppeteer.
     const crawler = new Apify.PuppeteerCrawler({
@@ -21,7 +23,12 @@ Apify.main(async () => {
         // Options that are passed to the Apify.launchPuppeteer() function.
         launchPuppeteerOptions: {
             headless: true,
+            ...proxy,
         },
+
+        // Concurrency
+        minConcurrency: 1,
+        maxConcurrency: 4,
 
         // Stop crawling after several pages
         maxRequestsPerCrawl: 1200, // There should not be more request as the ranking each year contains about 1000 universities
@@ -29,8 +36,8 @@ Apify.main(async () => {
         gotoFunction: ({ request, page }) => {
             const { url, userData } = request;
             // Wait until the page is fully loaded - universities table is loaded asynchronously
-            if (userData.type === PAGE_TYPES.INDEX) return page.goto(url, { waitUntil: 'networkidle2' });
-            return page.goto(url, {});
+            if (userData.type === PAGE_TYPES.INDEX) return page.goto(url, { waitUntil: 'networkidle2', timeout: 0 });
+            return page.goto(url, { timeout: 0 });
         },
 
 
