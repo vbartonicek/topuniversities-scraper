@@ -15,6 +15,8 @@
       "type": "string",
       "description": "A year of the QS rankings",
       "default": "2020",
+      "prefill": "2020",
+      "example": "2020",
       "editor": "select",
       "enum": ["2017", "2018", "2019", "2020"]
     },
@@ -23,6 +25,8 @@
       "type": "string",
       "description": "Choose a country",
       "default": "All countries",
+      "prefill": "All countries",
+      "example": "All countries",
       "editor": "select",
       "enum": [
         "All countries",

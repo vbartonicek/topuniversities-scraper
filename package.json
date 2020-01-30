@@ -2,14 +2,22 @@
   "name": "topuniversities-scraper",
   "version": "0.0.1",
   "description": "Scraper to get a list of top universities based on the QS World University Rankings",
-  "author": "Vratislav Bartonicek",
+  "author": {
+    "name": "Vratislav Bartonicek",
+    "url": "https://vbartonicek.cz"
+  },
   "license": "MIT",
   "scripts": {
-    "start": "node index.js",
-    "test": "echo \"Error: oops, the actor has no tests yet, sad!\" && exit 1"
+    "start": "node src/index.js",
+    "test": "echo \"Error: oops, the actor has no tests yet, sad!\" && exit 1",
+    "lint": "eslint src",
+    "lint:fix": "eslint src --fix"
   },
   "dependencies": {
     "apify": "^0.19.0"
   },
-  "devDependencies": {}
+  "devDependencies": {
+    "@apify/eslint-config": "0.0.3",
+    "eslint": "^6.8.0"
+  }
 }
