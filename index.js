@@ -1,12 +1,13 @@
 const Apify = require('apify');
+const scraper = require('./scrapers');
 
 Apify.main(async () => {
-    const { year, country } = await Apify.getInput();
+    const { detailedMode, year, country } = await Apify.getInput();
 
     // Apify.openRequestQueue() is a factory to get a preconfigured RequestQueue instance.
     // We add our first request to it - the initial page the crawler will visit.
     const requestQueue = await Apify.openRequestQueue();
-    await requestQueue.addRequest({ url: `https://www.topuniversities.com/university-rankings/world-university-rankings/${year}` });
+    await requestQueue.addRequest({ url: `https://www.topuniversities.com/university-rankings/world-university-rankings/${year}`, userData: { type: 'index' } });
 
     // Create an instance of the PuppeteerCrawler class - a crawler
     // that automatically loads the URLs in headless Chrome / Puppeteer.
@@ -21,8 +22,7 @@ Apify.main(async () => {
         },
 
         // Stop crawling after several pages
-        maxRequestsPerCrawl: 1,
-
+        maxRequestsPerCrawl: 1200,
 
         gotoFunction: ({request, page}) => {
             // Wait until the page is fully loaded - universities table is loaded asynchronously
@@ -37,47 +37,40 @@ Apify.main(async () => {
         // - page: Puppeteer's Page object (see https://pptr.dev/#show=api-class-page)
         handlePageFunction: async ({ request, page }) => {
             console.log(`Processing ${request.url}...`);
+            let data = [];
 
-            // A function to be evaluated by Puppeteer within the browser context.
-            const pageFunction = $universities => {
-                console.log('pageFunction');
-                const data = [];
+            if (request.userData.type === 'index') {
+                // Index page
 
-                // We're getting the title, rank and country of each university.
-                $universities.forEach($university => {
-                    console.log(`Processing university`);
-                    data.push({
-                        title: $university.querySelector('.uni .title').innerText,
-                        rank: $university.querySelector('.rank .rank').innerText,
-                        country: $university.querySelector('.country > div').innerText,
+                // Set "Results per page" select field to show all universities
+                await page.select('#qs-rankings_length select', '-1');
+
+                // Set country filter
+                if (country !== "All countries") await page.select('#qs-rankings thead select.country-select', country);
+
+                if (detailedMode) {
+                    // Detailed mode
+                    const infos = await Apify.utils.enqueueLinks({
+                        page,
+                        requestQueue,
+                        selector: '#qs-rankings > tbody > tr .uni .title[href]',
+                        transformRequestFunction: req => {
+                            req.userData.type = 'detail';
+                            return req;
+                        },
                     });
-                });
+                } else {
+                    // Basic mode
+                    data = await page.$$eval('#qs-rankings > tbody > tr', scraper.pageFunction);
+                }
 
-                return data;
-            };
-
-            // Set "Results per page" select field to show all universities
-            await page.select('#qs-rankings_length select', '-1');
-
-            // Set country filter
-            if (country !== "All countries") await page.select('#qs-rankings thead select.country-select', country);
-
-            // Select table rows with universities data and call the pageFunction
-            const data = await page.$$eval('#qs-rankings > tbody > tr', pageFunction);
+            } else {
+                // University detail page
+                data = await page.$$eval('#block-system-main > .content', scraper.detailPageFunction);
+            }
 
             // Store the results to the default dataset.
             await Apify.pushData(data);
-
-            // Find a link to the next page and enqueue it if it exists.
-            /*
-            const infos = await Apify.utils.enqueueLinks({
-                page,
-                requestQueue,
-                selector: '.paginate_button.next',
-            });
-            */
-
-            // if (infos.length === 0) console.log(`${request.url} is the last page!`);
         },
 
         // This function is called if the page processing failed more than maxRequestRetries+1 times.

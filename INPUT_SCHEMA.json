@@ -4,6 +4,12 @@
   "type": "object",
   "schemaVersion": 1,
   "properties": {
+    "detailedMode": {
+      "title": "Detailed information",
+      "type": "boolean",
+      "description": "If selected it will visit each university's detail page to collect detailed information. NOTE: It slows the running time dramatically",
+      "default": false
+    },
     "year": {
       "title": "Year",
       "type": "string",
@@ -99,7 +105,8 @@
         "United Arab Emirates",
         "United Kingdom",
         "United States",
-        "Uruguay","Venezuela",
+        "Uruguay",
+        "Venezuela",
         "Vietnam"
       ]
     }
