@@ -10,6 +10,16 @@
       "description": "If selected it will visit each university's detail page to collect detailed information. NOTE: It slows the running time dramatically",
       "default": false
     },
+    "detailedMode": {
+      "title": "Mode",
+      "type": "string",
+      "description": "Basic mode scrapes only a list of the ranked universities with basic information. Detailed mode visits each university's detail page to collect detailed information. NOTE: It slows the running time dramatically",
+      "default": "basic",
+      "prefill": "basic",
+      "example": "basic",
+      "editor": "select",
+      "enum": ["basic", "visitDetail"]
+    },
     "year": {
       "title": "Year",
       "type": "string",

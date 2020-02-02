@@ -2,18 +2,18 @@
 
 ## Top Universities scraper
 
-Scraper to get a list of top universities based on the QS World University Rankings
+A scraper to get a list of top universities based on the QS World University Rankings.
 
-Currently the scraper supports:
+Currently, the scraper supports two modes:
 
-- Basic mode (to get a a list of ranked universitied with basic data like name, country and link to its detail)
-- Detailed mode (to get a detailed information about the universities by visiting its detail pages)
+- Basic mode (to get a list of ranked universities with basic data like name, country, and link to its detail)
+- Detailed mode (to get detailed information about the universities by visiting its detail pages)
 
 ## Future plans
 
 ## Input parameters
 
-The input of this scraper should be JSON containing the filter of universities that should be scraped. Required fields are:
+The input of this scraper should be JSON containing the filter of universities that should be scrapped. Required fields are:
 
 | Field | Type | Description |
 | ----- | ---- | ----------- |
@@ -26,6 +26,6 @@ The input of this scraper should be JSON containing the filter of universities t
 {
   "detailedMode": false,
   "year": "2020",
-  "country": "Canada",
+  "country": "Canada"
 }
 ```

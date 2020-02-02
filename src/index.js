@@ -1,9 +1,9 @@
 const Apify = require('apify');
 const { pageFunction, detailPageFunction } = require('./scrapers');
-const { PAGE_TYPES } = require('./consts');
+const { MODE, PAGE_TYPES } = require('./consts');
 
 Apify.main(async () => {
-    const { detailedMode, year, country } = await Apify.getInput();
+    const { mode, year, country } = await Apify.getInput();
 
     // Apify.openRequestQueue() is a factory to get a preconfigured RequestQueue instance.
     // We add our first request to it - the initial page the crawler will visit.
@@ -52,8 +52,8 @@ Apify.main(async () => {
                 // Set country filter
                 if (country !== 'All countries') await page.select('#qs-rankings thead select.country-select', country);
 
-                if (detailedMode) {
-                    // Detailed mode
+                if (mode === MODE.VISIT_DETAIL) {
+                    // Mode to visit university detail pages
                     await Apify.utils.enqueueLinks({
                         page,
                         requestQueue,
