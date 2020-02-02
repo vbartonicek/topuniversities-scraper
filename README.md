@@ -20,9 +20,6 @@ The input of this scraper should be JSON containing the filter of universities t
 | detailedMode | boolean | Check if you want to run the detailed mode |
 | year | String | Select a year of the rankings  |
 | country | String | Select specific country or select "All countries" to not filter universities |
-| proxy | Object | Proxy configuration |
-
-This solution requires the use of **Proxy servers**, either your own proxy servers or you can use <a href="https://www.apify.com/docs/proxy">Apify Proxy</a>.
 
 ### Top Universities scraper Input example
 ```json
@@ -30,8 +27,5 @@ This solution requires the use of **Proxy servers**, either your own proxy serve
   "detailedMode": false,
   "year": "2020",
   "country": "Canada",
-  "proxy": {
-    "useApifyProxy": true
-  }
 }
 ```
