@@ -2,7 +2,7 @@
 
 ## Top Universities scraper
 
-A scraper to get a list of top universities based on the QS World University Rankings.
+An API to get a list of top universities based on the QS World University Rankings in various formats (HTML table, JSON, CSV, Excel, XML or RSS feed).
 
 Currently, the scraper supports two modes:
 
@@ -20,7 +20,7 @@ The input of this scraper should be JSON containing the filter of universities t
 
 | Field | Type | Description |
 | ----- | ---- | ----------- |
-| mode | String | Choose a mode (see description above) |
+| mode | String | Choose a mode (see the description above) |
 | year | String | Select a year of the rankings  |
 | country | String | Select specific country or select "All countries" to not filter universities |
 
