@@ -11,20 +11,23 @@ Currently, the scraper supports two modes:
 
 ## Future plans
 
+- To scrape more information in the detailed mode
+- To be able to filter countries for a region (e.g. Europe)
+
 ## Input parameters
 
 The input of this scraper should be JSON containing the filter of universities that should be scrapped. Required fields are:
 
 | Field | Type | Description |
 | ----- | ---- | ----------- |
-| detailedMode | boolean | Check if you want to run the detailed mode |
+| mode | String | Choose a mode (see description above) |
 | year | String | Select a year of the rankings  |
 | country | String | Select specific country or select "All countries" to not filter universities |
 
 ### Top Universities scraper Input example
 ```json
 {
-  "detailedMode": false,
+  "mode": "mode",
   "year": "2020",
   "country": "Canada"
 }
