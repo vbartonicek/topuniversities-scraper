@@ -27,7 +27,7 @@ The input of this scraper should be JSON containing the filter of universities t
 ### Top Universities scraper Input example
 ```json
 {
-  "mode": "mode",
+  "mode": "basic",
   "year": "2020",
   "country": "Canada"
 }
