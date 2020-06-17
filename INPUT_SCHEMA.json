@@ -18,11 +18,11 @@
       "title": "Year",
       "type": "string",
       "description": "A year of the QS rankings",
-      "default": "2020",
-      "prefill": "2020",
-      "example": "2020",
+      "default": "2021",
+      "prefill": "2021",
+      "example": "2021",
       "editor": "select",
-      "enum": ["2017", "2018", "2019", "2020"]
+      "enum": ["2017", "2018", "2019", "2020", "2021"]
     },
     "country": {
       "title": "Country",
