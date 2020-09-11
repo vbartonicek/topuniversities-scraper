@@ -22,23 +22,24 @@ exports.detailPageFunction = ($universities) => {
     const data = [];
 
     $universities.forEach(($university) => {
-        const uniStats = $university.querySelector('.uni_stats > .container');
-
+        const uniStatsSelector = $university.querySelectorAll('.uni_stats > .container .key');
         const location = $university.querySelector('.lead_section .location');
-        const address = location ? location.innerText.replace(' View map', '') : null;
-        const mapLink = location ? location.querySelector('a').href : null;
+        const result = {};
 
-        data.push({
-            title: $university.querySelector('.lead_section .title_info h1').innerText,
-            rank: uniStats.querySelector('.key:nth-child(1) .val').innerText,
-            status: uniStats.querySelector('.key:nth-child(2) .val').innerText,
-            researchOutput: uniStats.querySelector('.key:nth-child(3) .val').innerText,
-            studentsCount: uniStats.querySelector('.key:nth-child(4) .val').innerText,
-            scholarships: uniStats.querySelector('.key:nth-child(5) .val').innerText,
-            address,
-            mapLink,
-            logoLink: $university.querySelector('.lead_section .logo_area img').src,
+        result.title = $university.querySelector('.lead_section .title_info h1').innerText;
+        result.address = location && location.innerText ? location.innerText.replace(' View map', '').replace(/\n/g, ' ') : null;
+        result.mapLink = location ? location.querySelector('a').href : null;
+        result.logoLink = $university.querySelector('.lead_section .logo_area img').src;
+
+        // University stats
+        uniStatsSelector.forEach((item) => {
+            const label = item.querySelector('label').innerText.replace(/\s/g, '');
+            const formattedLabel = label.charAt(0).toLowerCase() + label.slice(1);
+            const value = item.querySelector('.val').innerText;
+            result[formattedLabel] = value;
         });
+
+        data.push({ result });
     });
 
     return data;
