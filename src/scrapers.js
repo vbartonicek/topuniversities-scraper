@@ -39,7 +39,7 @@ exports.detailPageFunction = ($universities) => {
             result[formattedLabel] = value;
         });
 
-        data.push({ result });
+        data.push(result);
     });
 
     return data;
