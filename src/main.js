@@ -89,13 +89,11 @@ Apify.main(async () => {
                     }
                 }
             } else {
-                // University detail page
-                data = await page.$$eval('body', detailPageFunction);
-                data = {
-                    ...data,
-                    detail_page: url,
-                };
-                await Apify.pushData(data);
+                // // University detail page
+                // eslint-disable-next-line no-shadow
+                for (const data of await page.$$eval('body', detailPageFunction)) {
+                    await Apify.pushData({ ...data, detail_page: url });
+                }
             }
         },
         handleFailedRequestFunction: async ({ request }) => {

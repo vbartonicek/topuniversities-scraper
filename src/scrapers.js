@@ -7,7 +7,7 @@ exports.pageFunction = ($universities) => {
     $universities.forEach(($university) => {
         data.push({
             title: $university.querySelector('.uni-link') ? $university.querySelector('.uni-link').textContent.trim() : null,
-            QS_World_University_Rankingnk: $university.querySelector('._univ-rank')
+            QS_world_university_ranking: $university.querySelector('._univ-rank')
                 ? $university.querySelector('._univ-rank').textContent.trim() : null,
             overall_score: $university.querySelector('.overall-score-span')
                 ? $university.querySelector('.overall-score-span').textContent.trim() : null,
@@ -29,7 +29,7 @@ exports.detailPageFunction = ($universities) => {
         const locations = $university.querySelectorAll('.desktop-view .campus-locations');
         const locationsResult = [];
         locations.forEach((locationNode) => {
-            locationsResult.push(locationNode.textContent.trim());
+            locationsResult.push(locationNode.textContent.trim().replace(/\n/g, ''));
         });
 
         result.title = $university.querySelector('.programeTitle') ? $university.querySelector('.programeTitle').textContent.trim() : null;
