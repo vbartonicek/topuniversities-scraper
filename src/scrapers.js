@@ -29,12 +29,12 @@ exports.detailPageFunction = ($universities) => {
         const locations = $university.querySelectorAll('.desktop-view .campus-locations');
         const locationsResult = [];
         locations.forEach((locationNode) => {
-            locationsResult.push(locationNode.textContent.trim().replace(/\n/g, ''));
+            locationsResult.push(locationNode.textContent.trim());
         });
 
         result.title = $university.querySelector('.programeTitle') ? $university.querySelector('.programeTitle').textContent.trim() : null;
         result.locations = locationsResult;
-        result.QS_World_University_Ranking = $university.querySelector('.uni_ranking span')
+        result.QS_world_university_ranking = $university.querySelector('.uni_ranking span')
             ? $university.querySelector('.uni_ranking span').textContent.replace('=', '') : null;
         result.status = $university.querySelector('li[title="Status"] > .info-setails')
             ? $university.querySelector('li[title="Status"] > .info-setails').textContent.trim() : null;

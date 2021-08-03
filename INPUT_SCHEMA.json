@@ -21,7 +21,7 @@
       "maximum": 100,
       "description": "Limit of universities you want to get in final dataset. Max value is 100.",
       "prefill": 10
-  },
+    },
     "year": {
       "title": "Year",
       "type": "string",
@@ -125,7 +125,14 @@
         "Venezuela",
         "Vietnam"
       ]
+    },
+    "proxy": {
+      "title": "Proxy configuration",
+      "description": "Set the proxy configuration of the scraper",
+      "default": {},
+      "type": "object",
+      "editor": "proxy"
     }
-  }
+  },
+  "required": ["proxy"]
 }
-

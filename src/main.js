@@ -1,11 +1,12 @@
 const Apify = require('apify');
+const { waitClick } = require('./fns');
 const { pageFunction, detailPageFunction } = require('./scrapers');
 const { MODE, PAGE_TYPES } = require('./consts');
 
 const { log } = Apify.utils;
 
 Apify.main(async () => {
-    const { mode, year, country, maxItems } = await Apify.getInput();
+    const { mode, year, country, maxItems, proxy } = await Apify.getInput();
     log.info(`Actor mode: ${mode}.`);
     log.info(`Year: ${year}.`);
     log.info(`Country: ${country}.`);
@@ -17,7 +18,7 @@ Apify.main(async () => {
         userData: { type: PAGE_TYPES.INDEX },
     });
 
-    const proxyConfiguration = await Apify.createProxyConfiguration();
+    const proxyConfiguration = await Apify.createProxyConfiguration(proxy);
 
     const crawler = new Apify.PuppeteerCrawler({
         requestQueue,
@@ -38,19 +39,20 @@ Apify.main(async () => {
             let data = [];
             log.info(`Processing ${url}...`);
             if (userData.type === PAGE_TYPES.INDEX) {
+                // this means the list loaded and dropdown will work
+                await page.waitForSelector('._qs-ranking-data-row');
                 // Index page
                 // Set "Results per page" select field to show all universities
-                await page.click('.sort_by_dropdown');
-                await Apify.utils.sleep(5000);
-                await page.click('.sort_by_dropdown .dropdown');
-                await Apify.utils.sleep(7000);
-                await page.click('.sort_by_dropdown div[data-value="100"]');
-                await Apify.utils.sleep(6000);
+                await waitClick(page, '.sort_by_dropdown .dropdown');
+                await page.evaluate(() => window.scrollBy({ top: document.body.scrollHeight / 2 }));
+                await waitClick(page, '.sort_by_dropdown div[data-value="100"]', 2000);
                 // Set country filter
                 if (country !== 'All countries') {
-                    log.info(`Setting desired country...`);
-                    await page.select('.country-select-realdiv #country-select', country.toLowerCase());
-                    await Apify.utils.sleep(6000);
+                    log.info(`Setting desired country ${country}...`);
+                    await Promise.all([
+                        page.waitForResponse(() => true),
+                        page.select('.country-select-realdiv #country-select', country.toLowerCase()),
+                    ]);
                 }
                 const numberOfResults = await page.$eval('#_totalcountresults', (el) => el.textContent);
                 log.info(`Found ${numberOfResults} results in total.`);

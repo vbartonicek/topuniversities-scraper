@@ -1,7 +1,8 @@
 ### 2021-07-29 - New SDK version (1.3.1).
 
 #### Bugs:
-- All selectors were updated to current + fixed https://github.com/vbartonicek/topuniversities-scraper/issues/9;
+- All selectors were updated to current + fixed https://github.com/vbartonicek/topuniversities-scraper/issues/9
+
 #### Improvements:
 - SDK update (1.3.1);
 - Improved logging during the run;
