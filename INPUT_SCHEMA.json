@@ -14,6 +14,14 @@
       "editor": "select",
       "enum": ["basic", "visitDetail"]
     },
+    "maxItems": {
+      "title": "Max items",
+      "type": "integer",
+      "minimum": 1,
+      "maximmum": 100,
+      "description": "Limit of universities you want to get in final dataset. Max value is 100.",
+      "prefill": 10
+  },
     "year": {
       "title": "Year",
       "type": "string",
