@@ -130,7 +130,7 @@
       "title": "Proxy configuration",
       "description": "Set the proxy configuration of the scraper",
       "default": {"useApifyProxy": true},
-      "prefil": {"useApifyProxy": true},
+      "prefill": {"useApifyProxy": true},
       "type": "object",
       "editor": "proxy"
     }
