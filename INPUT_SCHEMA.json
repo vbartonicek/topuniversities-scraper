@@ -26,11 +26,11 @@
       "title": "Year",
       "type": "string",
       "description": "A year of the QS rankings",
-      "default": "2021",
-      "prefill": "2021",
-      "example": "2021",
+      "default": "2022",
+      "prefill": "2022",
+      "example": "2022",
       "editor": "select",
-      "enum": ["2017", "2018", "2019", "2020", "2021"]
+      "enum": ["2017", "2018", "2019", "2020", "2021", "2022"]
     },
     "country": {
       "title": "Country",
@@ -60,7 +60,7 @@
         "Costa Rica",
         "Croatia",
         "Cuba",
-        "Czech Republic",
+        "Czechia",
         "Denmark",
         "Ecuador",
         "Egypt",
@@ -129,7 +129,8 @@
     "proxy": {
       "title": "Proxy configuration",
       "description": "Set the proxy configuration of the scraper",
-      "default": {},
+      "default": {useApifyProxy: true},
+      "prefil": {useApifyProxy: true},
       "type": "object",
       "editor": "proxy"
     }
